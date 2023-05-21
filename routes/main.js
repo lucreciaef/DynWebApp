@@ -20,5 +20,16 @@ module.exports = (app) => {
 	app.get("/about", (req, res) => {
 		res.render("about.html")
 	});
+
+	// To display the html
+	app.get("/register", (req,res) => {
+		res.render("register.html");
+	});
+	// To display the form data collected
+	app.post("/registered", (req,res) => {
+		// saving data in database
+		res.send("Hello "+ req.body.first + " "+ req.body.last +", you are now registered!" +
+		"We will send you a confirmation to your email address: " + req.body.email);
+	});
 }
 

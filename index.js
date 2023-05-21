@@ -2,10 +2,13 @@
 const http = require("http");
 // Include Express module
 const express = require("express");
+// Include body-parser module
+const bodyParser= require ("body-parser");
 // Create Express instance
 const app = express();
-
 const port = 8084;
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //This requires the main.js file inside the /routes folder passing in the
 // Express app as an argument. You will add all the routes to this file later.
