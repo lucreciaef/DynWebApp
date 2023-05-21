@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%=title%></title>
+</head>
+<body>
+<h1><%=title%></h1>
+<ul>
+    <%for (let i=0; i<supplies.length;i++){%>
+    <li>
+        <a href="supplies/<%=supplies[i]%>"></a>
+        <%=supplies[i]%>
+    </li>
+    <%}%>
+</ul>
+</body>
+</html>
