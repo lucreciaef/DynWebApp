@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Add a new book</h1>
+<p>Fill in the form below to add a new book</p>
+
+<form method="POST" action="/addbook">
+  <label for="name"></label>
+  <p>Enter name:
+    <input id="name" type="text" name="name" value="" />
+  </p>
+  <label for="price"></label>
+  <p>Enter price:
+    <input id ="price" type="number" name="price" value="">
+  </p>
+  <input type="submit" value="Add new book" />
+</form>
+<br>
+<button>
+  <a href="/list">Click to see all the books</a>
+</button>
+<br>
+<button>
+  <a href="/">Back to Home</a>
+</button>
+</body>
+</html>
