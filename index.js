@@ -2,6 +2,7 @@
 const http = require("http");
 // Include Express module
 const express = require("express");
+const expressSanitizer = require('express-sanitizer');
 // Include body-parser module
 const bodyParser= require ("body-parser");
 // Create Express instance
@@ -27,12 +28,17 @@ global.db = db;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Mount express-sanitizer middleware here
+app.use(expressSanitizer());
+
 //This requires the main.js file inside the /routes folder passing in the
 // Express app as an argument. You will add all the routes to this file later.
 require("./routes/main")(app);
 
 // This sets the path to the topic3/htmlExpress/views folder for the EJS engine
 app.set("views",__dirname + "/views");
+app.use('/css', express.static(__dirname + '/css'));
+
 
 // This tells Express that you want to use EJS
 // as the templating engine for this application

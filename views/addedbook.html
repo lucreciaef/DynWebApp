@@ -2,20 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <link href="../css/output.css" rel="stylesheet">
+  <title>New book added</title>
 </head>
-<body>
-<h1>Success!</h1>
+<body class="bg-green-200">
+<h1 class="text-2xl">Success!</h1>
 <p>Your book has been added:</p>
 <ul>
   <li><%= book.name %>, £<%= book.price %></li>
 </ul>
 <br>
-<button>
+<button class="py-2 px-5 bg-lime-500 rounded-full">
   <a href="/list">Click to see all the books</a>
 </button>
 <br>
-<button>
+<button class="py-2 px-5 bg-lime-500 rounded-full">
   <a href="/">Back to Home</a>
 </button>
 </body>

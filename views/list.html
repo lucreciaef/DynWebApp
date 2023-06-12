@@ -1,22 +1,42 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+  <link href="../css/output.css" rel="stylesheet">
   <title>Books List</title>
 </head>
-<body>
-<h1> List of available books</h1>
+<body class="bg-green-200">
+<h1 class="text-2xl underline bg-green-300"> List of available books</h1>
 <h3>Here you can see all available books at our bookshop:</h3>
-<ul>
-  <% availableBooks.forEach(function(book){ %>
-  <li><%= book.name %>, £<%= book.price %></li>
-  <% }) %>
-</ul>
+
+<table class="border-collapse border border-slate-500 table-auto">
+    <thead>
+      <tr>
+        <th class="border border-slate-600 bg-emerald-600">Book title</th>
+        <th class="border border-slate-600 bg-emerald-600">Price</th>
+      </tr>
+    </thead>
+  <tbody>
+
+      <% availableBooks.forEach(function(book){ %>
+      <tr>
+        <td class="border border-slate-700 bg-emerald-500"><%= book.name %></td>
+        <td class="border border-slate-700 bg-emerald-500"> £<%= book.price %></td>
+      <tr>
+      <% }) %>
+
+
+  </tbody>
+</table>
+
 <br>
-<button>
+<button class="py-2 px-5 bg-lime-500 rounded-full">
   <a href="/addbook">Add a new book</a>
 </button>
 <br>
-<button>
+<br>
+<button class="py-2 px-5 bg-lime-500 rounded-full">
   <a href="/">Back to Home</a>
 </button>
 </body>

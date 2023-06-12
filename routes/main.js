@@ -71,6 +71,8 @@ module.exports = (app) => {
 		// saving data in database
 		let sqlquery = "INSERT INTO books (name, price) VALUES (?,?)";
 		// execute sql query
+		// EXPRESS SANITIZER https://www.npmjs.com/package/express-sanitizer
+		// let sanitizedName = req.body.name.sanitize(req.body.propertyToSanitize);
 		let newrecord = {name:req.body.name, price:req.body.price};
 		db.query(sqlquery, [newrecord.name, newrecord.price], (err, result) => {
 			if (err) {
