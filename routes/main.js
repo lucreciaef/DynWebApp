@@ -3,14 +3,35 @@
 //Replaced function(){} with ()=>{}
 module.exports = (app) => {
 	app.get("/", (req, res) => {
-		res.render("index.html", {
-			title:"My Bookshop",
-			heading1:"Welcome to the new bookshop"
+		res.render("home.html", {
+			title:"Blog main page",
+			heading1:"Welcome to our blog - Read articles"
 		})
 	});
 
-	app.get("/search", (req, res) => {
-		res.render("search.html");
+	app.get("/authorhome", (req, res) => {
+		res.render("authorhome.html", {
+			title:"Welcome authors",
+			heading1:"Welcome authors - Manage articles"
+		})
+	});
+
+	app.get("/edit", (req, res) => {
+		res.render("editmode.html", {
+			title:"Edit your article"
+		});
+	});
+
+	app.get("/settings", (req, res) => {
+		res.render("settings.html", {
+			title:"Author settings"
+		})
+	});
+
+	app.get("/newarticle", (req, res) => {
+		res.render("newarticle.html", {
+			title:"Submit a new article"
+		})
 	});
 
 	app.get("/search-result-db", (req, res) => {
@@ -78,7 +99,7 @@ module.exports = (app) => {
 			if (err) {
 				return console.error(err.message);
 			}else
-				res.render("addedbook.html", {book:newrecord});
+				res.render("addedarticle.html", {book:newrecord});
 		});
 	});
 }

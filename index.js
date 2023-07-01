@@ -8,24 +8,18 @@ const bodyParser= require ("body-parser");
 // Create Express instance
 const app = express();
 
-const mysql = require("mysql2")
-const port = 8087;
+const sqlite = require("sqlite3").verbose();
 
-const db = mysql.createConnection ({
-	host: "localhost",
-	user: "root",
-	password: "testing1234!",
-	database: "myBookshop"
-});
 // connect to database
-db.connect((err) => {
+const db = new sqlite.Database("myblog.sqlite", (err) => {
 	if (err) {
-		throw err;
+		console.error(err.message);
 	}
-	console.log("Connected to database");
+	console.log("Connected to SQLite database");
 });
 global.db = db;
 
+const port = 8087;
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Mount express-sanitizer middleware here
