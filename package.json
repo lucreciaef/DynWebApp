@@ -1,14 +1,19 @@
 {
-  "name": "dnw-testing",
+  "name": "cm2040-dnw",
   "version": "1.0.0",
-  "description": "",
+  "description": "Mid-term assignment",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build-db": "cat db_schema.sql | sqlite3 database.db",
+    "build-db-win": "type db_schema.sql | sqlite3 database.db",
+    "clean-db": "rm database.db",
+    "clean-db-win": "del database.db",
+    "start": "node index.js",
     "build:css": "npx tailwindcss -i ./css/input.css -o ./css/output.css"
   },
   "keywords": [],
-  "author": "",
+  "author": "Lucrecia Ferreyra",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.2",
@@ -20,5 +25,9 @@
   },
   "devDependencies": {
     "tailwindcss": "^3.3.2"
+  },
+  "engines": {
+    "npm": ">=8.0.0",
+    "node": ">=16.0.0"
   }
 }
