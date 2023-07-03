@@ -19,8 +19,35 @@
 </p>
 <br>
 <button class="py-2 px-5 bg-lime-500 rounded-full">
-    <a href="/authorhome">Log in as author</a>
+    <a href="/user/login">Log in as author</a>
 </button>
+<br>
+<button class="py-2 px-5 bg-lime-500 rounded-full">
+    <a href="/user/create-user-record">Register</a>
+</button>
+
+
+<table class="border-collapse border border-slate-500 table-auto">
+    <thead>
+    <tr>
+        <th class="border border-slate-600 bg-emerald-600">Article title</th>
+        <th class="border border-slate-600 bg-emerald-600">Date</th>
+        <th class="border border-slate-600 bg-emerald-600">Author</th>
+        <th class="border border-slate-600 bg-emerald-600">Link</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <% articles.forEach(function(article){ %>
+    <tr>
+        <td class="border border-slate-700 bg-emerald-500"><%= article.article_title %></td>
+        <td class="border border-slate-700 bg-emerald-500"><%= article.article_date_publish %></td>
+        <td class="border border-slate-700 bg-emerald-500"><%= article.article_author_id %></td>
+        <td class="border border-slate-700 bg-emerald-500"><a href="/readmode?articleId=<%= article.article_id %>">follow the hoes</a></td>
+    <tr>
+    <% }) %>
+    </tbody>
+</table>
 
 </body>
 </html>

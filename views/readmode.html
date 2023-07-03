@@ -4,13 +4,15 @@
   <meta charset="UTF-8">
   <!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
   <link href="../css/output.css" rel="stylesheet">
-  <title>Article reader</title>
+  <title><%= article.article_title %></title>
 </head>
 <body class="p-8 bg-green-200">
-<h1 class="text-2xl underline bg-green-300"> Blog article</h1>
-<h3>Here you can see all available books at our bookshop:</h3>
+<h1 class="text-2xl underline bg-green-300"> <%= article.article_title %></h1>
+<h3><%= article.article_subtitle %> by <%= article.article_author_id %></h3>
 
-<!--TODO: POST REQUEST TO GET ARTICLE INFORMATION AND RENDER-->
+
+<p><%= article.article_body %> </p>
+
 <br>
 <button class="py-2 px-5 bg-lime-500 rounded-full">
   <a href="/">Back to reader home page</a>

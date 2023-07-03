@@ -3,17 +3,22 @@
 //Replaced function(){} with ()=>{}
 module.exports = (app) => {
 	app.get("/", (req, res) => {
-		res.render("home.html", {
-			title:"Blog main page",
-			heading1:"Welcome to our blog - Read articles"
-		})
-	});
-
-	app.get("/authorhome", (req, res) => {
-		res.render("authorhome.html", {
-			title:"Welcome authors",
-			heading1:"Welcome authors - Manage articles"
-		})
+		global.db.all(
+			"SELECT * FROM articles WHERE article_status = 'published'",
+			[],
+			function ( err, articles) {
+				if (err) {
+					next(err); //send the error on to the error handler
+				}
+				else {
+					res.render("home.html", {
+						title:"Blog main page",
+						heading1:"Welcome to our blog - Read articles",
+						articles: articles
+					})
+				}
+			}
+		);
 	});
 
 	app.get("/edit", (req, res) => {
@@ -33,6 +38,26 @@ module.exports = (app) => {
 			title:"Submit a new article"
 		})
 	});
+
+	app.get("/readmode", (req, res, next) => {
+		global.db.all(
+			"SELECT * FROM articles WHERE article_status = 'published' AND article_id = ?",
+			[req.query['articleId']],
+			function ( err, articles) {
+				if (err) {
+					next(err); //send the error on to the error handler
+				}
+				else if(articles.length > 0){
+
+					res.render("readmode.html", {
+						article: articles[0]
+					})
+				}
+			}
+		);
+	});
+
+
 
 	// app.get("/search-result-db", (req, res) => {
 	// 	//searching in the database
