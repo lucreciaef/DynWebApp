@@ -21,3 +21,17 @@
 </button>
 </body>
 </html>
+
+<% articles.forEach(function(article){ %>
+<tr>
+    <td class="border border-slate-700 bg-emerald-500"><%= article.article_title %></td>
+    <td class="border border-slate-700 bg-emerald-500"><%= article.article_date_publish %></td>
+    <td class="border border-slate-700 bg-emerald-500"><%= article.article_author_id %></td>
+    <td class="border border-slate-700 bg-emerald-500">
+        <button class="py-2 px-5 bg-lime-500 rounded-full">
+            <a href="/readmode?articleId=<%= article.article_id %>">Read article</a>
+        </button>
+    </td>
+</tr>
+<% }) %>
+</tbody>
