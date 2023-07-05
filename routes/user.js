@@ -6,7 +6,7 @@
 
 const express = require("express");
 const router = express.Router();
-const assert = require('assert');
+// const assert = require('assert');
 
 /**
  * @desc retrieves the current users
@@ -47,7 +47,7 @@ router.get("/get-user-records", (req, res, next) => {
  * @desc Renders the page for creating a user record
  */
 router.get("/login", (req, res) => {
-  res.render("login.html", {title:"Login TIME!"});
+  res.render("login.html", {title:"Log in to the BigBlogger"});
 });
 
 router.post("/login", (req, res, next) => {
@@ -63,13 +63,13 @@ router.post("/login", (req, res, next) => {
           next(err); //send the error on to the error handler
         }
         else if (row['COUNT(*)'] === 0) {
-          res.send(`You suck`);
+          res.send(`404 Username not found. Go back and try again.`);
           next();
         }
         else if (row['COUNT(*)'] === 1) {
           res.render("authorhome.html", {
-            title:"Welcome authors",
-            heading1:"Welcome authors - Manage articles"
+            title:"Welcome authors - The BigBlogger",
+            heading1:"Welcome authors - Manage your blog articles"
           });
           next();
         }
