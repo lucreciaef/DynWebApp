@@ -104,7 +104,10 @@ router.post("/create-user-record", (req, res, next) => {
       if (err) {
         next(err); //send the error on to the error handler
       } else {
-        res.send(`New data inserted @ id ${this.lastID}!`);
+        // res.send(`New data inserted @ id ${this.lastID}!`);
+          res.render("registrationsuccessful.html", {
+              title: "Registration successful!"
+          })
         next();
       }
     }
