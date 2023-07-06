@@ -4,17 +4,17 @@
 module.exports = (app) => {
 	app.get("/", (req, res) => {
 		global.db.all(
-			"SELECT * FROM articles WHERE article_status = 'published'",
+			"SELECT articles.*, author.author_first_name, author.author_last_name, author.author_id FROM articles JOIN author ON author.author_id = articles.article_author_id WHERE article_status = 'published'",
 			[],
-			function ( err, articles) {
+			function ( err, articlesAuthorJoined, next) {
 				if (err) {
 					next(err); //send the error on to the error handler
 				}
 				else {
 					res.render("home.html", {
 						title:"Blog main page",
-						heading1:"Welcome to our blog - Read articles",
-						articles: articles
+						heading1:"The BigBlogger - Read articles",
+						articles: articlesAuthorJoined
 					})
 				}
 			}
@@ -39,24 +39,60 @@ module.exports = (app) => {
 		})
 	});
 
-	app.get("/readmode", (req, res, next) => {
-		global.db.all(
-			"SELECT * FROM articles WHERE article_status = 'published' AND article_id = ?",
-			[req.query['articleId']],
-			function ( err, articles) {
-				if (err) {
-					next(err); //send the error on to the error handler
-				}
-				else if(articles.length > 0){
+	app.get("/readmode", async (req, res, next) => {
+		const articleId = req.query['articleId'];
 
-					res.render("readmode.html", {
-						article: articles[0]
-					})
+		let article = await new Promise((resolve, reject) => {
+			global.db.all(
+				"SELECT articles.*, author.author_first_name, author.author_last_name, author.author_id FROM articles JOIN author ON author.author_id = articles.article_author_id WHERE article_status = 'published' AND article_id = ?",
+				[articleId],
+				function ( err, articles) {
+					if (err) {
+						return reject(err);
+					}
+					else if(articles.length > 0) {
+						return resolve(articles[0]);
+					}
 				}
-			}
-		);
+			);
+		});
+
+		let comments = await new Promise((resolve, reject) => {
+			global.db.all("SELECT * FROM comments where comment_article_id = ? order by comment_date;",
+			[articleId],
+				function ( err, comments) {
+					if (err) {
+						return reject(err);
+					}
+					else {
+						return resolve(comments);
+					}
+				});
+		});
+
+		 //send the error on to the error handler
+
+		res.render("readmode.html", {
+			article: article,
+			comments: comments
+		})
 	});
 
+	app.get("/readmode_like", (req, res, next) => {
+		const articleId = req.query['articleId'];
+
+		global.db.run("UPDATE articles SET article_likes = article_likes + 1 where article_id = ?;",
+			[articleId],
+			function ( err, comments) {
+				if (err) {
+					res.fail("database error");
+					return reject(err);
+				}
+				else {
+					res.send("");
+				}
+			});
+	});
 
 
 	// app.get("/search-result-db", (req, res) => {

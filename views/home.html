@@ -23,7 +23,7 @@
                 <button class="w-full text-white bg-violet-700 hover:bg-violet-900 focus:ring-4 focus:outline-none focus:ring-primary-300
                   font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-violet-700 dark:hover:bg-violet-900
                   dark:focus:ring-violet-950">
-                    <a href="/user/create-user-record">Register</a>
+                    <a href="/user/register-author">Register</a>
                 </button>
             </div>
         </div>
@@ -59,7 +59,7 @@
 <!--                             src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png"-->
 <!--                             alt="Jese Leos avatar"/>-->
                         <span class="font-medium dark:text-white">
-                          👩🏻 Author ID: <%= article.article_author_id %>
+                          👩🏻 By: <%= article.author_first_name %> <%= article.author_last_name %>
                       </span>
                     </div>
                     <a href="/readmode?articleId=<%= article.article_id %>"

@@ -7,15 +7,83 @@
     <title><%= article.article_title %></title>
 </head>
 <body class="p-8 bg-violet-400">
-<h1 class="text-2xl underline bg-green-300"> <%= article.article_title %></h1>
-<h3><%= article.article_subtitle %> by <%= article.article_author_id %></h3>
-
-
-<p><%= article.article_body %> </p>
-
-<br>
-<button class="py-2 px-5 bg-lime-500 rounded-full">
-    <a href="/">Back to reader home page</a>
-</button>
+<div class="px-6 py-4 w-auto">
+    <button class="auto text-white bg-violet-700 hover:bg-violet-900 focus:ring-4 focus:outline-none focus:ring-primary-300
+                      font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-violet-700 dark:hover:bg-violet-900
+                      dark:focus:ring-violet-950">
+        <a href="/">Back to reader home page</a>
+    </button>
+</div>
+<section class="bg-white dark:bg-gray-900">
+    <div class="p-6">
+        <div class="flex justify-between">
+            <h1 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+                <%= article.article_title %></h1>
+            <button class="auto text-white bg-violet-700 hover:bg-violet-900 focus:ring-4 focus:outline-none
+            focus:ring-primary-300
+            font-medium rounded-lg text-sm px-2.5 py-2 text-center dark:bg-violet-700 dark:hover:bg-violet-900
+            dark:focus:ring-violet-950 mx-6">
+            <a onclick="AddLike('<%= article.article_id %>')">😍 Likes: <p id="articleLikesCounter"><%= article.article_likes %></p></a>
+            </button>
+        </div>
+        <h3>Published by <strong><%= article.author_first_name %> <%= article.author_last_name %></strong></h3>
+        <article class="py-4 px-4 max-w-screen-xl lg:py-16 lg:px-6">
+            <p><%= article.article_body %> </p>
+        </article>
+    </div>
+</section>
+<section class="bg-violet-100 dark:bg-gray-900">
+    <div class="px-6 py-2">
+        <div class="px-6 py-2">
+            <h2 class="mb-4 text-xl lg:text-xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+                Comments</h2>
+        </div>
+        <% comments.forEach(function(comment){ %>
+        <div class="bg-violet-300 p-6 my-2 mx-6 w-2/3">
+            <div class="py-2.5">
+                <p>👽 <strong><%= comment.comment_username %></strong> wrote on <%= comment.comment_date %>:</p>
+            </div>
+            <p><%= comment.comment_text %></p>
+            <div class="py-2.5">
+                <div class="flex justify-between">
+                    <p><button>👍</button> <strong><%= comment.comment_likes %></strong> liked this</p>
+                    <p><button>reply</button></p>
+                </div>
+            </div>
+        </div>
+        <% }) %>
+    </div>
+    <div class="p-6">
+        <form class="space-y-4 md:space-y-6" action="/postcomment" method="post">
+        <div class="px-6 py-2">
+            <label for="comment" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Add a comment</label>
+            <input type="text" name="comment" id="comment"
+                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-base rounded-lg focus:ring-primary-600
+                   focus:border-primary-600 block w-2/3 h-auto p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400
+                   dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                   placeholder="" required="">
+            <button type="submit"
+                    class="my-3 w-auto text-white bg-violet-700 hover:bg-violet-900 focus:ring-4 focus:outline-none focus:ring-primary-300
+                  font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-violet-700 dark:hover:bg-violet-900
+                  dark:focus:ring-violet-950">Post!
+            </button>
+        </div>
+        </form>
+    </div>
+</section>
 </body>
+<script>
+function AddLike(articleId){
+	fetch("/readmode_like?articleId=" + articleId)
+	.then((response) => {
+		if(response.ok){
+			var likesCounter = document.querySelector('#articleLikesCounter');
+			var likesCount = parseInt(likesCounter.innerText);
+			likesCounter.innerText = likesCount + 1;
+        }
+    });
+}
+
+</script>
 </html>

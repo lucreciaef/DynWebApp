@@ -73,6 +73,10 @@ router.post("/login", (req, res, next) => {
           });
           next();
         }
+        else if (row['COUNT(*)'] > 1) {
+            res.send(`Duplicate username. Please register only once.`);
+            next();
+        }
       }
   );
 });
@@ -80,14 +84,14 @@ router.post("/login", (req, res, next) => {
 /**
  * @desc Renders the page for creating a user record
  */
-router.get("/create-user-record", (req, res) => {
+router.get("/register-author", (req, res) => {
   res.render("create-user-record");
 });
 
 /**
  * @desc Add a new user record to the database for user id = 1
  */
-router.post("/create-user-record", (req, res, next) => {
+router.post("/register-author", (req, res, next) => {
   //USE this pattern to update and insert data
   //NB. it's better NOT to use arrow functions for callbacks with this library
   // const data = generateRandomData(10);const
