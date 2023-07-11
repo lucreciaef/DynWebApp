@@ -12,7 +12,7 @@ module.exports = (app) => {
 				}
 				else {
 					res.render("home.html", {
-						title:"Blog main page",
+						title:"BigBlogger - Readers main page",
 						heading1:"The BigBlogger - Read articles",
 						articles: articlesAuthorJoined
 					})

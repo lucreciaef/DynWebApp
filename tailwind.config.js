@@ -6,7 +6,8 @@ module.exports = {
   content: [
     './views/*.html',
     './index.js',
-    './routes/*.js'],
+    './routes/*.js',
+    "./node_modules/flowbite/**/*.js"],
   theme: {
     extend: {
       colors: {
@@ -53,5 +54,7 @@ module.exports = {
   //   'sans':['Helvetica','Arial', defaultTheme.fontFamily.sans],
   //   extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('flowbite/plugin')
+  ],
 }

@@ -11,37 +11,37 @@ const router = express.Router();
 /**
  * @desc retrieves the current users
  */
-router.get("/get-test-users", (req, res, next) => {
-
-  //Use this pattern to retrieve data
-  //NB. it's better NOT to use arrow functions for callbacks with this library
-  global.db.all(
-      "SELECT * FROM testUsers", function (err, rows) {
-    if (err) {
-      next(err); //send the error on to the error handler
-    } else {
-      res.json(rows);
-    }
-  });
-  
-});
+// router.get("/get-test-users", (req, res, next) => {
+//
+//   //Use this pattern to retrieve data
+//   //NB. it's better NOT to use arrow functions for callbacks with this library
+//   global.db.all(
+//       "SELECT * FROM testUsers", function (err, rows) {
+//     if (err) {
+//       next(err); //send the error on to the error handler
+//     } else {
+//       res.json(rows);
+//     }
+//   });
+//
+// });
 
 /**
  * @desc retrieves the current user records
  */
-router.get("/get-user-records", (req, res, next) => {
-  //USE this pattern to retrieve data
-  //NB. it's better NOT to use arrow functions for callbacks with this library
-
-  global.db.all(
-      "SELECT * FROM testUserRecords", function (err, rows) {
-    if (err) {
-      next(err); //send the error on to the error handler
-    } else {
-      res.json(rows);
-    }
-  });
-});
+// router.get("/get-user-records", (req, res, next) => {
+//   //USE this pattern to retrieve data
+//   //NB. it's better NOT to use arrow functions for callbacks with this library
+//
+//   global.db.all(
+//       "SELECT * FROM testUserRecords", function (err, rows) {
+//     if (err) {
+//       next(err); //send the error on to the error handler
+//     } else {
+//       res.json(rows);
+//     }
+//   });
+// });
 
 /**
  * @desc Renders the page for creating a user record
@@ -68,8 +68,8 @@ router.post("/login", (req, res, next) => {
         }
         else if (row['COUNT(*)'] === 1) {
           res.render("authorhome.html", {
-            title:"Welcome authors - The BigBlogger",
-            heading1:"Welcome authors - Manage your blog articles"
+            title:"The BigBlogger - Author home",
+            heading1:"Manage your blog articles"
           });
           next();
         }
