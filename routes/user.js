@@ -67,10 +67,8 @@ router.post("/login", (req, res, next) => {
           next();
         }
         else if (row['COUNT(*)'] === 1) {
-          res.render("authorhome.html", {
-            title:"The BigBlogger - Author home",
-            heading1:"Manage your blog articles"
-          });
+            res.redirect("/author/authorhome")
+
           next();
         }
         else if (row['COUNT(*)'] > 1) {
@@ -85,7 +83,7 @@ router.post("/login", (req, res, next) => {
  * @desc Renders the page for creating a user record
  */
 router.get("/register-author", (req, res) => {
-  res.render("create-user-record");
+  res.render("create-user-record.ejs");
 });
 
 /**
@@ -106,6 +104,7 @@ router.post("/register-author", (req, res, next) => {
     [firstName, lastName, username, password],
     function (err) {
       if (err) {
+          console.log("Error when using sql")
         next(err); //send the error on to the error handler
       } else {
         // res.send(`New data inserted @ id ${this.lastID}!`);
@@ -117,6 +116,62 @@ router.post("/register-author", (req, res, next) => {
     }
   );
 });
+
+router.get("/readmode", async (req, res) => {
+    const articleId = req.query['articleId'];
+
+    let article = await new Promise((resolve, reject) => {
+        global.db.all(
+            "SELECT articles.*, author.author_first_name, author.author_last_name, author.author_id FROM articles JOIN author ON author.author_id = articles.article_author_id WHERE article_status = 'published' AND article_id = ?",
+            [articleId],
+            function ( err, articles) {
+                if (err) {
+                    return reject(err);
+                }
+                else if(articles.length > 0) {
+                    return resolve(articles[0]);
+                }
+            }
+        );
+    });
+
+    let comments = await new Promise((resolve, reject) => {
+        global.db.all("SELECT * FROM comments where comment_article_id = ? order by comment_date;",
+            [articleId],
+            function ( err, comments) {
+                if (err) {
+                    return reject(err);
+                }
+                else {
+                    return resolve(comments);
+                }
+            });
+    });
+
+    //send the error on to the error handler
+
+    res.render("readmode.html", {
+        article: article,
+        comments: comments
+    })
+});
+
+router.get("/readmode_like", (req, res) => {
+    const articleId = req.query['articleId'];
+
+    global.db.run("UPDATE articles SET article_likes = article_likes + 1 where article_id = ?;",
+        [articleId],
+        function ( err) {
+            if (err) {
+                res.fail("database error");
+                return reject(err);
+            }
+            else {
+                res.send("");
+            }
+        });
+});
+
 
 ///////////////////////////////////////////// HELPERS ///////////////////////////////////////////
 

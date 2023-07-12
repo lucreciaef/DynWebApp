@@ -2,6 +2,7 @@
 //Adding routes to files in /views
 //Replaced function(){} with ()=>{}
 module.exports = (app) => {
+
 	app.get("/", (req, res) => {
 		global.db.all(
 			"SELECT articles.*, author.author_first_name, author.author_last_name, author.author_id FROM articles JOIN author ON author.author_id = articles.article_author_id WHERE article_status = 'published'",
@@ -20,80 +21,6 @@ module.exports = (app) => {
 			}
 		);
 	});
-
-	app.get("/edit", (req, res) => {
-		res.render("editmode.html", {
-			title:"Edit your article"
-		});
-	});
-
-	app.get("/settings", (req, res) => {
-		res.render("settings.html", {
-			title:"Author settings"
-		})
-	});
-
-	app.get("/newarticle", (req, res) => {
-		res.render("newarticle.html", {
-			title:"Submit a new article"
-		})
-	});
-
-	app.get("/readmode", async (req, res, next) => {
-		const articleId = req.query['articleId'];
-
-		let article = await new Promise((resolve, reject) => {
-			global.db.all(
-				"SELECT articles.*, author.author_first_name, author.author_last_name, author.author_id FROM articles JOIN author ON author.author_id = articles.article_author_id WHERE article_status = 'published' AND article_id = ?",
-				[articleId],
-				function ( err, articles) {
-					if (err) {
-						return reject(err);
-					}
-					else if(articles.length > 0) {
-						return resolve(articles[0]);
-					}
-				}
-			);
-		});
-
-		let comments = await new Promise((resolve, reject) => {
-			global.db.all("SELECT * FROM comments where comment_article_id = ? order by comment_date;",
-			[articleId],
-				function ( err, comments) {
-					if (err) {
-						return reject(err);
-					}
-					else {
-						return resolve(comments);
-					}
-				});
-		});
-
-		 //send the error on to the error handler
-
-		res.render("readmode.html", {
-			article: article,
-			comments: comments
-		})
-	});
-
-	app.get("/readmode_like", (req, res, next) => {
-		const articleId = req.query['articleId'];
-
-		global.db.run("UPDATE articles SET article_likes = article_likes + 1 where article_id = ?;",
-			[articleId],
-			function ( err, comments) {
-				if (err) {
-					res.fail("database error");
-					return reject(err);
-				}
-				else {
-					res.send("");
-				}
-			});
-	});
-
 
 	// app.get("/search-result-db", (req, res) => {
 	// 	//searching in the database

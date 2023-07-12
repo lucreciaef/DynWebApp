@@ -26,9 +26,11 @@ app.use(expressSanitizer());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const userRoutes = require('./routes/user');
+const authorRoutes = require('./routes/author');
 
-//this adds all the userRoutes to the app under the path /user
+//this adds all the userRoutes to the app under the path /user and /author
 app.use('/user', userRoutes);
+app.use('/author', authorRoutes);
 
 //This requires the main.js file inside the /routes folder passing in the
 // Express app as an argument. You will add all the routes to this file later.
