@@ -75,7 +75,7 @@
 </body>
 <script>
 function AddLike(articleId){
-	fetch("/readmode_like?articleId=" + articleId)
+	fetch("/user/readmode_like?articleId=" + articleId)
 	.then((response) => {
 		if(response.ok){
 			var likesCounter = document.querySelector('#articleLikesCounter');

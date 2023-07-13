@@ -41,10 +41,15 @@
 <body class="p-8 bg-violet-400 grow justify-center">
 <section class="bg-gray-50 dark:bg-gray-900 grow">
     <div class="py-4 px-4 lg:py-16 lg:px-6">
-        <h1 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
-            <%=heading1%></h1>
-        <br>
         <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
+            <h1 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
+                Manage your articles</h1>
+
+            <% if (result_message) { %>
+            <h2 class="mb-4 text-xl lg:text-xl tracking-tight font-extrabold text-red-800 dark:text-white">
+                <%=result_message%></h2>
+            <% } %>
+            <br>
             <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
                 <!-- Start coding here -->
                 <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
@@ -148,7 +153,7 @@
                                 <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <%= article.article_title %></th>
                                 <td class="px-4 py-3"><%= article.article_subtitle %></td>
-                                <td class="px-4 py-3">DATE-CREATED</td>
+                                <td class="px-4 py-3"><%= article.article_date_create %></td>
                                 <td class="px-4 py-3">DATE-MODIFIED</td>
                                 <td class="px-4 py-3"><%= article.author_first_name %> <%= article.author_last_name %></td>
                                 <td class="px-4 py-3 flex items-center justify-end">
